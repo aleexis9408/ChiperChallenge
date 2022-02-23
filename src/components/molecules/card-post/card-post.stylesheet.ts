@@ -1,7 +1,8 @@
 import {StyleSheet} from 'react-native';
+import {COLORS, FONTS_SIZES} from '../../../theme/default';
 
 export const styles = StyleSheet.create({
-  container: {
+  cardPost: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     width: '100%',
@@ -9,27 +10,34 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     justifyContent: 'space-between',
     flexWrap: 'wrap',
+    borderColor: COLORS.GRAY_100,
+    borderWidth: 1,
   },
-  thumbnail: {
+  cardPost__thumbnail: {
     width: '25%',
     flexGrow: 2,
     marginRight: 10,
   },
-  body: {
+  cardPost__body: {
     width: '70%',
     justifyContent: 'space-between',
     flexGrow: 3,
   },
-  timeAgo: {
+  cardPost__body_timeAgo: {
     textAlign: 'right',
+    fontSize: FONTS_SIZES.small,
   },
-  title: {
+  cardPost__body_title: {
+    fontSize: FONTS_SIZES.paragraph,
     marginTop: 10,
     fontWeight: 'bold',
   },
-  bodyIntern: {
+  cardPost__body_content: {
     marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  cardPost__body_content_text: {
+    fontSize: FONTS_SIZES.small,
   },
 });

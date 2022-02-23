@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../theme/default';
 
 export const styles = StyleSheet.create({
   container: {
@@ -6,9 +7,8 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: '#ccc',
+    borderColor: COLORS.GRAY_200,
     borderWidth: 1,
     height: 50,
-    color: 'green',
   },
 });
