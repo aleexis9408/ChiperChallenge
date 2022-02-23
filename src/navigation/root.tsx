@@ -8,7 +8,11 @@ const Stack = createNativeStackNavigator();
 const RootNavigation = () => {
   return (
     <Stack.Navigator initialRouteName="home">
-      <Stack.Screen name="home" component={Home} />
+      <Stack.Screen
+        name="home"
+        component={Home}
+        options={{title: 'reddit/r/pics'}}
+      />
       <Stack.Screen name="web" component={Web} />
     </Stack.Navigator>
   );
