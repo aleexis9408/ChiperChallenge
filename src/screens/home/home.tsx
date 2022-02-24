@@ -41,29 +41,32 @@ export const Home = ({
     },
   ];
 
-  const getRedditData = async (category = 'new') => {
+  const {response, isLoading, isError} = RedditServices.useRedditData();
+  console.log('response', response);
+
+  /* const getRedditData = async (category = 'new') => {
     try {
       setListData([]);
       const response: IReddit = await RedditServices.getRedditData(category);
       setListData(response.data.children);
     } catch (error) {}
-  };
+  }; */
 
-  const onRefresh = async () => {
+  /* const onRefresh = async () => {
     setRefreshing(true);
     setListData([]);
     await getRedditData();
     setRefreshing(false);
   };
-
-  useEffect(() => {
+ */
+  /* useEffect(() => {
     getRedditData();
-  }, []);
+  }, []); */
 
   return (
     <View style={styles.home}>
       <FlatList
-        data={listData}
+        data={response}
         keyExtractor={(item, index) => `${index}`}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
