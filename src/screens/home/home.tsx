@@ -1,16 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import {View, FlatList, RefreshControl} from 'react-native';
+import {
+  View,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import {CardPost} from '../../components/molecules/card-post/card-post';
 import {Tabs} from '../../components/molecules/tabs/tabs';
 import {RedditServices} from '../../services/Reddit/Reddit.services';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootNavigationProps} from '../../navigation/root';
 import {IReddit, Ithing} from '../../services/Reddit/Reddit.dto';
+const screen = Dimensions.get('screen');
 
 export const Home = ({
   navigation,
 }: NativeStackScreenProps<RootNavigationProps, 'home'>) => {
-  const [listData, setListData] = useState<Ithing>();
+  const [listData, setListData] = useState<Ithing | undefined>();
   const [refreshing, setRefreshing] = React.useState(false);
   const [selectedMenu, setSelectedMenu] = useState('New');
 
@@ -35,6 +43,7 @@ export const Home = ({
 
   const getRedditData = async (category = 'new') => {
     try {
+      setListData([]);
       const response: IReddit = await RedditServices.getRedditData(category);
       setListData(response.data.children);
     } catch (error) {}
@@ -42,6 +51,7 @@ export const Home = ({
 
   const onRefresh = async () => {
     setRefreshing(true);
+    setListData([]);
     await getRedditData();
     setRefreshing(false);
   };
@@ -51,13 +61,19 @@ export const Home = ({
   }, []);
 
   return (
-    <View>
+    <View style={styles.home}>
       <FlatList
         data={listData}
         keyExtractor={(item, index) => `${index}`}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
+        ListEmptyComponent={() => (
+          <View style={styles.home__spinner}>
+            <ActivityIndicator size="large" />
+          </View>
+        )}
+        refreshing={true}
         ListHeaderComponent={() => (
           <React.Fragment>
             <Tabs
@@ -78,3 +94,15 @@ export const Home = ({
     </View>
   );
 };
+
+export const styles = StyleSheet.create({
+  home: {
+    flex: 1,
+  },
+  home__spinner: {
+    flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: screen.height - 200,
+  },
+});

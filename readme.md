@@ -1,6 +1,8 @@
 # React Native: Chiper Challenge
 
-<!-- TODO: add doc readme -->
+In this challenge you're going to create a basic Reddit app with React Native
+
+Reddit is a news website where registered users can submit posts or links to content that other users can vote and comment. Each of these posts is grouped into categories known as "subreddits".
 
 ### Application Android Demo:
 
