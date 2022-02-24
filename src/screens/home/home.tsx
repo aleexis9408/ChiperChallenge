@@ -48,7 +48,7 @@ export const Home = ({navigation}) => {
     <View>
       <FlatList
         data={listData}
-        keyExtractor={(item, index) => index + ''}
+        keyExtractor={(item, index) => `${index}`}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
