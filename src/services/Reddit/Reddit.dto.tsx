@@ -24,3 +24,7 @@ export interface Idata {
   author_fullname: string;
   [key: string]: any;
 }
+
+export interface IGetPostParams {
+  category: 'top' | 'new' | 'hot' | 'controversial';
+}

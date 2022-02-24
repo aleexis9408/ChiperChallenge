@@ -84,11 +84,7 @@ export const Home = ({
           </React.Fragment>
         )}
         renderItem={({item, index}) => (
-          <CardPost
-            key={index}
-            content={item.data}
-            onPress={() => navigation.navigate('web', {uri: item.data.url})}
-          />
+          <CardPost key={index} content={item.data} />
         )}
       />
     </View>
