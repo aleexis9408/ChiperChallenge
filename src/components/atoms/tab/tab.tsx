@@ -2,7 +2,14 @@ import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 import {styles} from './tab.stylesheet';
 
-export const Tab = ({onPress, title, selectedMenu, setSelectedMenu}) => {
+interface Props {
+  selectedMenu: string;
+  onPress: () => void;
+  setSelectedMenu: (menu: string) => void;
+  title: string;
+}
+
+export const Tab = ({onPress, title, selectedMenu, setSelectedMenu}: Props) => {
   return (
     <TouchableOpacity
       style={[styles.tab, selectedMenu === title && styles.tab_selected]}

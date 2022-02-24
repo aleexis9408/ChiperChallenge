@@ -3,9 +3,14 @@ import {View, FlatList, RefreshControl} from 'react-native';
 import {CardPost} from '../../components/molecules/card-post/card-post';
 import {Tabs} from '../../components/molecules/tabs/tabs';
 import {RedditServices} from '../../services/Reddit/Reddit.services';
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootNavigationProps} from '../../navigation/root';
+import {IReddit, Ithing} from '../../services/Reddit/Reddit.dto';
 
-export const Home = ({navigation}) => {
-  const [listData, setListData] = useState();
+export const Home = ({
+  navigation,
+}: NativeStackScreenProps<RootNavigationProps, 'home'>) => {
+  const [listData, setListData] = useState<Ithing>();
   const [refreshing, setRefreshing] = React.useState(false);
   const [selectedMenu, setSelectedMenu] = useState('New');
 
@@ -29,9 +34,10 @@ export const Home = ({navigation}) => {
   ];
 
   const getRedditData = async (category = 'new') => {
-    const response = await RedditServices.getRedditData(category);
-    console.log(response);
-    setListData(response.data.children);
+    try {
+      const response: IReddit = await RedditServices.getRedditData(category);
+      setListData(response.data.children);
+    } catch (error) {}
   };
 
   const onRefresh = async () => {

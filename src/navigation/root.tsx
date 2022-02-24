@@ -3,7 +3,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Home} from '../screens/home/home';
 import {Web} from '../screens/web/web';
 
-const Stack = createNativeStackNavigator();
+export type RootNavigationProps = {
+  home: undefined;
+  web: {
+    uri: string;
+  };
+};
+
+const Stack = createNativeStackNavigator<RootNavigationProps>();
 
 const RootNavigation = () => {
   return (
