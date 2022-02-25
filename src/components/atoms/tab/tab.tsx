@@ -1,26 +1,25 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
+import {AppContext} from '../../../context/app.provider';
 import {styles} from './tab.stylesheet';
 
 interface Props {
-  selectedMenu: string;
-  onPress: () => void;
-  setSelectedMenu: (menu: string) => void;
   title: string;
+  file: string;
 }
 
-export const Tab = ({onPress, title, selectedMenu, setSelectedMenu}: Props) => {
+export const Tab = ({title, file}: Props) => {
+  const {select, setSelect} = useContext(AppContext);
   return (
     <TouchableOpacity
-      style={[styles.tab, selectedMenu === title && styles.tab_selected]}
+      style={[styles.tab, select === file && styles.tab_selected]}
       onPress={() => {
-        setSelectedMenu(title);
-        onPress();
+        setSelect(file);
       }}>
       <Text
         style={[
           styles.tab__text,
-          selectedMenu === title && styles.tab__text_selected,
+          select === file && styles.tab__text_selected,
         ]}>
         {title}
       </Text>

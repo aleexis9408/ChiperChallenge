@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   FlatList,
@@ -13,35 +13,36 @@ import {RedditServices} from '../../services/Reddit/Reddit.services';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootNavigationProps} from '../../navigation/root';
 import {IReddit, Ithing} from '../../services/Reddit/Reddit.dto';
+import {AppContext} from '../../context/app.provider';
 const screen = Dimensions.get('screen');
 
-export const Home = ({
-  navigation,
-}: NativeStackScreenProps<RootNavigationProps, 'home'>) => {
+export const Home = ({}: NativeStackScreenProps<
+  RootNavigationProps,
+  'home'
+>) => {
   const [listData, setListData] = useState<Ithing | undefined>();
   const [refreshing, setRefreshing] = React.useState(false);
-  const [selectedMenu, setSelectedMenu] = useState('New');
-
+  const {select} = useContext(AppContext);
   const TABS = [
     {
+      file: 'new',
       title: 'New',
-      onPress: () => getRedditData('new'),
     },
     {
+      file: 'top',
       title: 'Top',
-      onPress: () => getRedditData('top'),
     },
     {
+      file: 'controversial',
       title: 'Popular',
-      onPress: () => getRedditData('controversial'),
     },
     {
+      file: 'hot',
       title: 'Hot',
-      onPress: () => getRedditData('hot'),
     },
   ];
 
-  const getRedditData = async (category = 'new') => {
+  const getRedditData = async category => {
     try {
       setListData([]);
       const response: IReddit = await RedditServices.getRedditData(category);
@@ -52,13 +53,13 @@ export const Home = ({
   const onRefresh = async () => {
     setRefreshing(true);
     setListData([]);
-    await getRedditData();
+    await getRedditData(select);
     setRefreshing(false);
   };
 
   useEffect(() => {
-    getRedditData();
-  }, []);
+    getRedditData(select);
+  }, [select]);
 
   return (
     <View style={styles.home}>
@@ -76,11 +77,7 @@ export const Home = ({
         refreshing={true}
         ListHeaderComponent={() => (
           <React.Fragment>
-            <Tabs
-              tabs={TABS}
-              selectedMenu={selectedMenu}
-              setSelectedMenu={setSelectedMenu}
-            />
+            <Tabs tabs={TABS} />
           </React.Fragment>
         )}
         renderItem={({item, index}) => (
