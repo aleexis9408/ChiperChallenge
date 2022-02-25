@@ -42,37 +42,23 @@ export const Home = ({}: NativeStackScreenProps<
     },
   ];
 
-  const {response, isLoading, isError} = RedditServices.useRedditData();
-  console.log('response', response);
-
-  /* const getRedditData = async (category = 'new') => {
-  const getRedditData = async category => {
-    try {
-      setListData([]);
-      const response: IReddit = await RedditServices.getRedditData(category);
+  const {response, isLoading, isError} = RedditServices.useRedditData(select);
+  useEffect(() => {
+    if (response?.data?.children?.length > 0) {
       setListData(response.data.children);
-    } catch (error) {}
-  }; */
+    }
+  }, [response]);
 
-  /* const onRefresh = async () => {
+  const onRefresh = async () => {
     setRefreshing(true);
     setListData([]);
-    await getRedditData(select);
     setRefreshing(false);
   };
- */
-  /* useEffect(() => {
-    getRedditData();
-  }, []); */
-
-  useEffect(() => {
-    getRedditData(select);
-  }, [select]);
 
   return (
     <View style={styles.home}>
       <FlatList
-        data={response}
+        data={isLoading ? [] : listData}
         keyExtractor={(item, index) => `${index}`}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

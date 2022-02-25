@@ -1,5 +1,4 @@
 import apiService from '../../common/axios.instance';
-import {fetcher} from '../../common/swr.instance';
 import useSWR from 'swr';
 import {IGetPostParams, IReddit} from './Reddit.dto';
 
@@ -16,8 +15,7 @@ export class RedditServices {
   };
 
   static useRedditData = (category = 'new') => {
-    const {data, error} = useSWR(`r/pics/${category}.json`, fetcher);
-
+    const {data, error} = useSWR(`r/pics/${category}.json`);
     return {
       response: data,
       isLoading: !error && !data,
