@@ -4,22 +4,14 @@ import {Tab} from '../../atoms/tab/tab';
 import {styles} from './tabs.stylesheet';
 
 interface Props {
-  tabs: {title: string; onPress: () => void}[];
-  selectedMenu: string;
-  setSelectedMenu: (menu: string) => void;
+  tabs: {title: string; file: string}[];
 }
 
-export const Tabs = ({tabs, selectedMenu, setSelectedMenu}: Props) => {
+export const Tabs = ({tabs}: Props) => {
   return (
     <View style={styles.container}>
       {tabs.map((item, index) => (
-        <Tab
-          key={`${index}`}
-          onPress={item.onPress}
-          title={item.title}
-          selectedMenu={selectedMenu}
-          setSelectedMenu={setSelectedMenu}
-        />
+        <Tab key={`${index}`} title={item.title} file={item.file} />
       ))}
     </View>
   );

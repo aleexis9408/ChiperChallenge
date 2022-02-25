@@ -3,15 +3,20 @@ import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {Idata} from '../../../services/Reddit/Reddit.dto';
 import {convertEpochToTimeAgo} from '../../../utils/convertEpochToTime';
 import {styles} from './card-post.stylesheet';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
   content: Idata;
-  onPress: () => void;
 }
 
-export const CardPost = ({content, onPress}: Props) => {
+export const CardPost = ({content}: Props) => {
+  const navigation = useNavigation();
+  const onPress = (uri: string) => () => {
+    navigation.navigate('web', {uri});
+  };
+
   return (
-    <TouchableOpacity style={styles.cardPost} onPress={onPress}>
+    <TouchableOpacity style={styles.cardPost} onPress={onPress(content.url)}>
       {content?.thumbnail && (
         <Image
           style={styles.cardPost__thumbnail}

@@ -1,10 +1,10 @@
 import apiService from '../../common/axios.instance';
 import {fetcher} from '../../common/swr.instance';
 import useSWR from 'swr';
-import {IReddit} from './Reddit.dto';
+import {IGetPostParams, IReddit} from './Reddit.dto';
 
 export class RedditServices {
-  static getRedditData = (category = 'new') => {
+  static getRedditData = (category: IGetPostParams) => {
     return new Promise<IReddit>((resolve, reject) => {
       apiService.get(`r/pics/${category}.json`).subscribe({
         next: result => resolve(result),
